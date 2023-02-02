@@ -92,7 +92,9 @@ runs:
           curl -LO https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_522.06_windows.exe
           curl -LO https://developer.download.nvidia.com/compute/redist/cudnn/v8.6.0/local_installers/11.8/cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip
           curl -LO http://www.winimage.com/zLibDll/zlib123dllx64.zip
+          curl -LO https://github.com/NVIDIA/cuda-samples/archive/refs/tags/v11.8.zip
           cuda_11.8.0_522.06_windows.exe -s
+          unzip cuda-samples-11.8.zip
           unzip cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip
           unzip zlib123dllx64.zip
           move cudnn-windows-x86_64-8.6.0.163_cuda11-archive\bin\*.dll "%ProgramFiles%\NVIDIA GPU Computing Toolkit\CUDA\v11.8\bin"
