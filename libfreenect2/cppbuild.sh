@@ -20,10 +20,6 @@ download https://github.com/glfw/glfw/archive/$GLFW_VERSION.tar.gz glfw-$GLFW_VE
 download http://downloads.sourceforge.net/project/libjpeg-turbo/1.5.3/$LIBJPEG.tar.gz $LIBJPEG.tar.gz
 download https://github.com/OpenKinect/libfreenect2/archive/v$LIBFREENECT2_VERSION.tar.gz libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 download https://github.com/NVIDIA/cuda-samples/archive/v$CUDA_VERSION.tar.gz cuda-samples-$CUDA_VERSION.tar.gz
-if [[ $PLATFORM == windows* ]]; then
-    download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
-    unzip -o libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
-fi
 
 mkdir -p $PLATFORM
 cd $PLATFORM
@@ -36,6 +32,11 @@ tar --totals -xzf ../glfw-$GLFW_VERSION.tar.gz
 tar --totals -xzf ../$LIBJPEG.tar.gz
 tar --totals -xzf ../libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 tar --totals -xzf ../cuda-samples-$CUDA_VERSION.tar.gz
+
+if [[ $PLATFORM == windows* ]]; then
+    download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+    unzip -o libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+fi
 
 cd nasm-$NASM_VERSION
 # fix for build with GCC 8.x
