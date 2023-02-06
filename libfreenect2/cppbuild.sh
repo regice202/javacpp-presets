@@ -51,7 +51,7 @@ echo "x-={[X]}=-x Building $PLATFORM"
 case $PLATFORM in
     linux-x86)
         echo "x-={[X]}=-x"
-        ls -laR
+        tree -a
         echo "x-={[X]}=-x"
         #CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY
         export CC="gcc -m32 -fPIC"
@@ -68,8 +68,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-$CUDA_VERSION
-        $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ --makefile=Makefile
+        make -j $MAKEJ
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -79,7 +78,7 @@ case $PLATFORM in
         ;;
     linux-x86_64)
         echo "x-={[X]}=-x"
-        ls -laR
+        tree -a
         echo "x-={[X]}=-x"
         export CC="gcc -m64 -fPIC"
         cd libusb-$LIBUSB_VERSION
@@ -95,8 +94,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-$CUDA_VERSION
-        $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ --makefile=Makefile
+        make -j $MAKEJ
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -106,7 +104,7 @@ case $PLATFORM in
         ;;
     macosx-x86_64)
         echo "x-={[X]}=-x"
-        ls -laR
+        tree -a
         echo "x-={[X]}=-x"
         cd glfw-$GLFW_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
@@ -117,8 +115,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-$CUDA_VERSION
-        $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ --makefile=Makefile
+        make -j $MAKEJ
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -129,11 +126,10 @@ case $PLATFORM in
         ;;
     windows-x86_64)
         echo "x-={[X]}=-x"
-        ls -laR
+        tree -a
         echo "x-={[X]}=-x"
         cd cuda-samples-$CUDA_VERSION
-        $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ --makefile=Makefile
+        make -j $MAKEJ
         make install
         cd ..
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
