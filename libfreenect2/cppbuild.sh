@@ -51,7 +51,7 @@ echo "x-={[X]}=-x Building $PLATFORM"
 case $PLATFORM in
     linux-x86)
         which tree &>/dev/null
-        if [[ $? -eq 0 ]]; then
+        if [ $? -eq 0 ]; then
             echo "Installing 'tree' command"
             yum install tree
         fi
@@ -83,7 +83,7 @@ case $PLATFORM in
         ;;
     linux-x86_64)
         which tree &>/dev/null
-        if [[ $? -eq 0 ]]; then
+        if [ $? -eq 0 ]; then
             echo "Installing 'tree' command"
             yum install tree
         fi
@@ -114,7 +114,7 @@ case $PLATFORM in
         ;;
     macosx-x86_64)
         which tree &>/dev/null
-        if [[ $? -eq 0 ]]; then
+        if [ $? -eq 0 ]; then
             echo "Installing 'tree' command"
             yum install tree
         fi
@@ -141,7 +141,7 @@ case $PLATFORM in
         ;;
     windows-x86_64)
         which tree &>/dev/null
-        if [[ $? eq 0 ]]; then
+        if [ $? eq 0 ]; then
             echo "Installing 'tree' command"
             yum install tree
         fi
