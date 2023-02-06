@@ -47,7 +47,7 @@ make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
 echo "x-={[X]}=-x Building $PLATFORM"
-yum install tree
+yum -y install tree
 
 case $PLATFORM in
     linux-x86)
