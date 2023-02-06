@@ -46,11 +46,13 @@ make -j $MAKEJ V=0
 make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
-echo "Building $PLATFORM"
+echo "x-={[X]}=-x Building $PLATFORM"
 
 case $PLATFORM in
     linux-x86)
-        ls -la
+        echo "x-={[X]}=-x"
+        ls -laR
+        echo "x-={[X]}=-x"
         #CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY
         export CC="gcc -m32 -fPIC"
         cd libusb-$LIBUSB_VERSION
@@ -76,7 +78,9 @@ case $PLATFORM in
         make install
         ;;
     linux-x86_64)
-        ls -la
+        echo "x-={[X]}=-x"
+        ls -laR
+        echo "x-={[X]}=-x"
         export CC="gcc -m64 -fPIC"
         cd libusb-$LIBUSB_VERSION
         CC="gcc -m64" CXX="g++ -m64" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux --disable-udev
@@ -101,7 +105,9 @@ case $PLATFORM in
         make install
         ;;
     macosx-x86_64)
-        ls -la
+        echo "x-={[X]}=-x"
+        ls -laR
+        echo "x-={[X]}=-x"
         cd glfw-$GLFW_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ
@@ -122,7 +128,9 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        dir /s /b /o:gn
+        echo "x-={[X]}=-x"
+        ls -laR
+        echo "x-={[X]}=-x"
         cd cuda-samples-$CUDA_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ --makefile=Makefile
