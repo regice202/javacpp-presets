@@ -46,9 +46,11 @@ make -j $MAKEJ V=0
 make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
+echo "Building $PLATFORM"
 
 case $PLATFORM in
     linux-x86)
+        ls -la
         #CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY
         export CC="gcc -m32 -fPIC"
         cd libusb-$LIBUSB_VERSION
@@ -65,7 +67,7 @@ case $PLATFORM in
         make install
         cd ../cuda-samples-$CUDA_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ
+        make -j $MAKEJ --makefile=Makefile
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -74,6 +76,7 @@ case $PLATFORM in
         make install
         ;;
     linux-x86_64)
+        ls -la
         export CC="gcc -m64 -fPIC"
         cd libusb-$LIBUSB_VERSION
         CC="gcc -m64" CXX="g++ -m64" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux --disable-udev
@@ -89,7 +92,7 @@ case $PLATFORM in
         make install
         cd ../cuda-samples-$CUDA_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ
+        make -j $MAKEJ --makefile=Makefile
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -98,6 +101,7 @@ case $PLATFORM in
         make install
         ;;
     macosx-x86_64)
+        ls -la
         cd glfw-$GLFW_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ
@@ -108,7 +112,7 @@ case $PLATFORM in
         make install
         cd ../cuda-samples-$CUDA_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ
+        make -j $MAKEJ --makefile=Makefile
         make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
@@ -118,10 +122,10 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        tree /f
+        dir /s /b /o:gn
         cd cuda-samples-$CUDA_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
-        make -j $MAKEJ
+        make -j $MAKEJ --makefile=Makefile
         make install
         cd ..
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
@@ -129,7 +133,7 @@ case $PLATFORM in
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
         rm bin/freenect2.dll
         rm bin/freenect2-openni2.dll
-        cd ../libfreenect2-$LIBFREENECT2_VERSION
+        cd libfreenect2-$LIBFREENECT2_VERSION
         CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=ON -DNVCUDASAMPLES_ROOT=../cuda-samples-$CUDA_VERSION -DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.dll -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/glfw3.dll -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/turbojpeg.dll .
         make -j $MAKEJ
         make install
