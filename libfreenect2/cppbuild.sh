@@ -47,14 +47,10 @@ make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
 echo "x-={[X]}=-x Building $PLATFORM"
+yum install tree
 
 case $PLATFORM in
     linux-x86)
-        which tree &>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "Installing 'tree' command"
-            yum install tree
-        fi
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -82,11 +78,6 @@ case $PLATFORM in
         make install
         ;;
     linux-x86_64)
-        which tree &>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "Installing 'tree' command"
-            yum install tree
-        fi
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -113,11 +104,6 @@ case $PLATFORM in
         make install
         ;;
     macosx-x86_64)
-        which tree &>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "Installing 'tree' command"
-            yum install tree
-        fi
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -140,11 +126,6 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        which tree &>/dev/null
-        if [ $? eq 0 ]; then
-            echo "Installing 'tree' command"
-            yum install tree
-        fi
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
