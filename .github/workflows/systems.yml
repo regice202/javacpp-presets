@@ -1,10 +1,6 @@
 name: systems
 on:
-  push:
-    paths:
-      - systems/**
-      - .github/workflows/systems.yml
-  pull_request:
+  [push, pull_request]:
     paths:
       - systems/**
       - .github/workflows/systems.yml
@@ -17,6 +13,10 @@ env:
   CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
   STAGING_REPOSITORY: ${{ secrets.STAGING_REPOSITORY }}
 jobs:
+  debug-session:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: mxschmitt/action-tmate@v3
   linux-armhf:
     runs-on: ubuntu-20.04
     container: ubuntu:bionic

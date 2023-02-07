@@ -129,7 +129,7 @@ case $PLATFORM in
         ;;
     windows-x86_64)
         echo "x-={[X]}=-x"
-        tree.com //f
+        tree.com //a //f
         echo "x-={[X]}=-x"
         cd cuda-samples-$CUDA_VERSION
         make -j $MAKEJ
