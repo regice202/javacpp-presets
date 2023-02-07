@@ -1,6 +1,7 @@
 name: systems
 on:
-  push: pull_request:
+  push:
+  pull_request:
     paths:
       - systems/**
       - .github/workflows/systems.yml
