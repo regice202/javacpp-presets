@@ -15,6 +15,7 @@ jobs:
   debug-session:
     runs-on: ubuntu-20.04
     steps:
+      - name: Start Debug SSH Session
       - uses: mxschmitt/action-tmate@v3
   linux-armhf:
     runs-on: ubuntu-20.04
