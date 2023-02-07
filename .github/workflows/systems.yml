@@ -1,8 +1,8 @@
 name: systems
 on: [push, pull_request]
-    paths:
-      - systems/**
-      - .github/workflows/systems.yml
+  paths:
+    - systems/**
+    - .github/workflows/systems.yml
   workflow_dispatch:
 env:
   CI_DEPLOY_MODULE: ${{ github.workflow }}
