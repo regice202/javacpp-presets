@@ -46,11 +46,11 @@ make -j $MAKEJ V=0
 make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
-echo "x-={[X]}=-x Building $PLATFORM"
-yum -y install tree
+echo "x-={[X]}=-x Building '$PLATFORM' from '$INSTALL_PATH'"
 
 case $PLATFORM in
     linux-x86)
+        yum -y install tree
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -78,6 +78,7 @@ case $PLATFORM in
         make install
         ;;
     linux-x86_64)
+        yum -y install tree
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -104,6 +105,7 @@ case $PLATFORM in
         make install
         ;;
     macosx-x86_64)
+        brew install tree
         echo "x-={[X]}=-x"
         tree -a
         echo "x-={[X]}=-x"
@@ -127,7 +129,7 @@ case $PLATFORM in
         ;;
     windows-x86_64)
         echo "x-={[X]}=-x"
-        tree -a
+        tree /f
         echo "x-={[X]}=-x"
         cd cuda-samples-$CUDA_VERSION
         make -j $MAKEJ
