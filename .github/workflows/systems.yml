@@ -1,6 +1,9 @@
 name: systems
 on:
   push:
+    paths:
+      - systems/**
+      - .github/workflows/systems.yml
   pull_request:
     paths:
       - systems/**
@@ -16,8 +19,8 @@ env:
 jobs:
   debug-session:
     runs-on: ubuntu-20.04
+    container: ubuntu:bionic
     steps:
-      - name: Start Debug SSH Session
       - uses: mxschmitt/action-tmate@v3
   linux-armhf:
     runs-on: ubuntu-20.04
