@@ -50,10 +50,10 @@ echo "x-={[X]}=-x Building '$PLATFORM' from '$INSTALL_PATH'"
 
 case $PLATFORM in
     linux-x86)
-        yum -y install tree
-        echo "x-={[X]}=-x"
-        tree -a
-        echo "x-={[X]}=-x"
+        #yum -y install tree
+        #echo "x-={[X]}=-x"
+        #tree -a
+        #echo "x-={[X]}=-x"
         #CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY
         export CC="gcc -m32 -fPIC"
         cd libusb-$LIBUSB_VERSION
@@ -78,10 +78,10 @@ case $PLATFORM in
         make install
         ;;
     linux-x86_64)
-        yum -y install tree
-        echo "x-={[X]}=-x"
-        tree -a
-        echo "x-={[X]}=-x"
+        #yum -y install tree
+        #echo "x-={[X]}=-x"
+        #tree -a
+        #echo "x-={[X]}=-x"
         export CC="gcc -m64 -fPIC"
         cd libusb-$LIBUSB_VERSION
         CC="gcc -m64" CXX="g++ -m64" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux --disable-udev
@@ -105,10 +105,10 @@ case $PLATFORM in
         make install
         ;;
     macosx-x86_64)
-        brew install tree
-        echo "x-={[X]}=-x"
-        tree -a
-        echo "x-={[X]}=-x"
+        #brew install tree
+        #echo "x-={[X]}=-x"
+        #tree -a
+        #echo "x-={[X]}=-x"
         cd glfw-$GLFW_VERSION
         $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ
@@ -128,9 +128,9 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        echo "x-={[X]}=-x"
-        tree.com //a //f
-        echo "x-={[X]}=-x"
+        #echo "x-={[X]}=-x"
+        #tree.com //a //f
+        #echo "x-={[X]}=-x"
         cd cuda-samples-$CUDA_VERSION
         make -j $MAKEJ
         make install
