@@ -24,7 +24,11 @@ jobs:
     steps:
       - name: Setup 'linux-x86'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-      - name: Start SSH Session
+      - name: Show file structure
+        run: |
+          yum -y install tree
+          tree -a
+      - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
         timeout-minutes: 10
@@ -34,7 +38,11 @@ jobs:
     steps:
       - name: Setup 'linux-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-      - name: Start SSH Session
+      - name: Show file structure
+        run: |
+          yum -y install tree
+          tree -a
+      - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
         timeout-minutes: 10
@@ -43,7 +51,11 @@ jobs:
     steps:
       - name: Setup 'macosx-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
-      - name: Start SSH Session
+      - name: Show file structure
+        run: |
+          brew install tree
+          tree -a
+      - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
         timeout-minutes: 10
@@ -52,7 +64,10 @@ jobs:
     steps:
       - name: Setup 'windows-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
-      - name: Start SSH Session
+      - name: Show file structure
+        run: |
+          tree //a //f
+      - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
         timeout-minutes: 10
@@ -62,3 +77,7 @@ jobs:
     steps:
       - name: Redeploy
         uses: bytedeco/javacpp-presets/.github/actions/redeploy@actions
+      - name: Start SSH session
+        uses: mxschmitt/action-tmate@v3
+        continue-on-error: true
+        timeout-minutes: 10
