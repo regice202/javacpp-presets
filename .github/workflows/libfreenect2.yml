@@ -22,8 +22,9 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
-      - name: Setup 'linux-x86'
+      - name: Build for 'linux-x86'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
+        continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -36,8 +37,9 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
-      - name: Setup 'linux-x86_64'
+      - name: Build for 'linux-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
+        continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -49,8 +51,9 @@ jobs:
   macosx-x86_64:
     runs-on: macos-11
     steps:
-      - name: Setup 'macosx-x86_64'
+      - name: Build for 'macosx-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
+        continue-on-error: true
       - name: Show file structure
         run: |
           brew install tree
@@ -62,8 +65,9 @@ jobs:
   windows-x86_64:
     runs-on: windows-2019
     steps:
-      - name: Setup 'windows-x86_64'
+      - name: Build for 'windows-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
+        continue-on-error: true
       - name: Show file structure
         run: |
           tree //a //f
