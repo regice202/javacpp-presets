@@ -28,7 +28,7 @@ jobs:
       - name: Show file structure
         run: |
           yum -y install tree
-          tree -a
+          tree -a /
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
@@ -43,7 +43,7 @@ jobs:
       - name: Show file structure
         run: |
           yum -y install tree
-          tree -a
+          tree -a /
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
@@ -57,7 +57,7 @@ jobs:
       - name: Show file structure
         run: |
           brew install tree
-          tree -a
+          tree -a /
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
@@ -70,7 +70,7 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
-          tree //a //f
+          tree /a /f C:\
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
