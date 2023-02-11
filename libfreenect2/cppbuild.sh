@@ -47,7 +47,7 @@ make install
 export PATH=$INSTALL_PATH/bin:$PATH
 cd ..
 echo "x-={[X]}=-x Building '$PLATFORM' from '$INSTALL_PATH'"
-rmdir cuda-samples-$CUDA_VERSION/Samples/4_CUDA_Libraries/watershedSegmentationNPP
+rm -r cuda-samples-$CUDA_VERSION/Samples/4_CUDA_Libraries/watershedSegmentationNPP
 
 case $PLATFORM in
     linux-x86)
