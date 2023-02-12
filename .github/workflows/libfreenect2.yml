@@ -76,7 +76,9 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
-          tree /f /a C:\
+          tree /f /a
+          echo "x-={[X]}=-x"
+          tree /f /a $CUDA_PATH/../..
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
