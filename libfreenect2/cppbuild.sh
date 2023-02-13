@@ -105,7 +105,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find . -maxdepth 2 -type f -name '*.h' -exec 'mv {}' ../include
+        find . -maxdepth 2 -type f -name '*.h' -exec 'mv {} ../include'
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
