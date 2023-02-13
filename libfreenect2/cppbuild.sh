@@ -105,7 +105,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find . -maxdepth 2 -type f -name '*.h' -exec mv '{}' ../include
+        find -D exec . -maxdepth 2 -type f -name '*.h' -exec "mv '{}' ../include"
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
@@ -144,7 +144,7 @@ case $PLATFORM in
         #tree.com //a //f
         #echo "x-={[X]}=-x"
         cd cuda-samples-10.1.2
-        powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '../include'"
+        powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '../include' -Force"
         cd ..
         #cd cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
