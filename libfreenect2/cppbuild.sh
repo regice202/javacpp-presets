@@ -23,7 +23,7 @@ if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
     if [[ $PLATFORM == windows* ]]; then
         download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
     fi
-    download https://github.com/NVIDIA/cuda-samples/archive/refs/tags/10.1.2.tar.gz
+    download https://github.com/NVIDIA/cuda-samples/archive/refs/tags/10.1.2.tar.gz cuda-samples-10.1.2.tar.gz
 fi
 #download https://github.com/NVIDIA/cuda-samples/archive/v$CUDA_VERSION.tar.gz cuda-samples-$CUDA_VERSION.tar.gz
 
@@ -105,7 +105,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find . -maxdepth 2 -type f -name '*.h' -exec mv {} ../include \;
+        find . -maxdepth 2 -type f -name '*.h' -exec mv {} ../include
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
