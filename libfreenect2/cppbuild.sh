@@ -40,7 +40,7 @@ tar --totals -xzf ../libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 #tar --totals -xzf ../cuda-samples-$CUDA_VERSION.tar.gz
 if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
     if [[ $PLATFORM == windows* ]]; then
-        unzip -o libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+        unzip -o ../libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
     fi
     tar --totals -xzf ../cuda-samples-10.1.2.tar.gz
 fi
@@ -105,7 +105,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find . -maxdepth 2 -type f -name '*.h' -exec 'mv {} ../include'
+        find . -maxdepth 2 -type f -name '*.h' -exec mv '{}' ../include
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
