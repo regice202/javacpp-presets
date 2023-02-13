@@ -19,6 +19,12 @@ download http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$LIBUSB_
 download https://github.com/glfw/glfw/archive/$GLFW_VERSION.tar.gz glfw-$GLFW_VERSION.tar.gz
 download http://downloads.sourceforge.net/project/libjpeg-turbo/1.5.3/$LIBJPEG.tar.gz $LIBJPEG.tar.gz
 download https://github.com/OpenKinect/libfreenect2/archive/v$LIBFREENECT2_VERSION.tar.gz libfreenect2-$LIBFREENECT2_VERSION.tar.gz
+if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
+    if [[ $PLATFORM == windows* ]]; then
+        download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+    fi
+    download https://github.com/NVIDIA/cuda-samples/archive/refs/tags/10.1.2.tar.gz
+fi
 #download https://github.com/NVIDIA/cuda-samples/archive/v$CUDA_VERSION.tar.gz cuda-samples-$CUDA_VERSION.tar.gz
 
 mkdir -p $PLATFORM
@@ -32,10 +38,11 @@ tar --totals -xzf ../glfw-$GLFW_VERSION.tar.gz
 tar --totals -xzf ../$LIBJPEG.tar.gz
 tar --totals -xzf ../libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 #tar --totals -xzf ../cuda-samples-$CUDA_VERSION.tar.gz
-
-if [[ $PLATFORM == windows* ]]; then
-    download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
-    unzip -o libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
+    if [[ $PLATFORM == windows* ]]; then
+        unzip -o libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
+    fi
+    tar --totals -xzf ../cuda-samples-10.1.2.tar.gz
 fi
 
 cd nasm-$NASM_VERSION
@@ -97,12 +104,14 @@ case $PLATFORM in
         ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux
         make -j $MAKEJ
         make install
+        cd ../cuda-samples-10.1.2
+        find . -maxdepth 2 -type f -name '*.h' -exec mv {} ../include \;
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
-        CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
+        CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DCUDA_NVCC_EXECUTABLE=/usr/local/cuda-$CUDA_VERSION/bin/nvcc -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
         ;;
@@ -134,6 +143,8 @@ case $PLATFORM in
         #echo "x-={[X]}=-x"
         #tree.com //a //f
         #echo "x-={[X]}=-x"
+        cd cuda-samples-10.1.2
+        powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '../include'"
         #cd cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
