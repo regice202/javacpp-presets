@@ -105,7 +105,7 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find -D exec . -maxdepth 2 -type f -name '*.h' -exec "mv '{}' ../include"
+        #find -D exec . -maxdepth 2 -type f -name '*.h' -exec "mv '{}' ../include"
         #cd ../cuda-samples-$CUDA_VERSION
         #make -j $MAKEJ
         #make install
@@ -150,11 +150,12 @@ case $PLATFORM in
         #make -j $MAKEJ
         #make install
         #cd ..
+        echo '###$CMAKE'
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/lib/* lib
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
         cd libfreenect2-$LIBFREENECT2_VERSION
-        CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=ON -DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH/../v$CUDA_VERSION -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.dll -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/glfw3.dll -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/turbojpeg.dll .
+        CC="cl" /I../include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=../bin/libusb-1.0.dll /DGLFW3_LIBRARY=../bin/glfw3.dll /DTurboJPEG_LIBRARIES=../bin/turbojpeg.dll $CMAKE ../lib/freenect2.lib .
         make -j $MAKEJ
         make install
         ;;
