@@ -31,12 +31,6 @@ jobs:
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: false
-        continue-on-error: true
-        timeout-minutes: 10
   linux-x86_64:
     runs-on: ubuntu-20.04
     container: centos:7
@@ -50,12 +44,6 @@ jobs:
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: false
-        continue-on-error: true
-        timeout-minutes: 10
   macosx-x86_64:
     runs-on: macos-11
     steps:
