@@ -152,11 +152,11 @@ case $PLATFORM in
         #make install
         #cd ..
         echo "CMake - \"$CMAKE\""
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64\include\* include
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64\lib\* lib
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64\bin\* bin
+        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
+        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/lib/* lib
+        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
         cd libfreenect2-$LIBFREENECT2_VERSION
-        CC="cl" /I ..\include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=..\bin\libusb-1.0.dll /DGLFW3_LIBRARY=..\bin\glfw3.dll /DTurboJPEG_LIBRARIES=..\bin\turbojpeg.dll $CMAKE ..\lib\freenect2.lib .
+        CC="cl" /I ../include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=../bin/libusb-1.0.dll /DGLFW3_LIBRARY=../bin/glfw3.dll /DTurboJPEG_LIBRARIES=../bin/turbojpeg.dll $CMAKE ../lib/freenect2.lib .
         make -j $MAKEJ
         make install
         ;;
