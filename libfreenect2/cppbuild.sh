@@ -65,11 +65,11 @@ case $PLATFORM in
         #echo "x-={[X]}=-x"
         export CC="gcc -m32 -fPIC"
         cd libusb-$LIBUSB_VERSION
-        CC="gcc -m32 -std=c17" CXX="g++ -m32 -std==c++17" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=i686-linux --disable-udev
+        CC="gcc -m32 -std=c14" CXX="g++ -m32 -std==c++14" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=i686-linux --disable-udev
         make -j $MAKEJ
         make install
         cd ../glfw-$GLFW_VERSION
-        CC="gcc -m32 -std=c17" CXX="g++ -m32 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
+        CC="gcc -m32 -std=c14" CXX="g++ -m32 -std=c++14" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ
         make install
         cd ../$LIBJPEG
@@ -82,7 +82,7 @@ case $PLATFORM in
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
-        CC="gcc -m32 -std=c17" CXX="g++ -m32 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=OFF -DENABLE_CXX17=ON -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
+        CC="gcc -m32 -std=c14" CXX="g++ -m32 -std=c++14" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=OFF -DENABLE_CXX17=ON -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
         ;;
@@ -93,11 +93,11 @@ case $PLATFORM in
         #echo "x-={[X]}=-x"
         export CC="gcc -m64 -fPIC"
         cd libusb-$LIBUSB_VERSION
-        CC="gcc -m64 -std=c17" CXX="g++ -m64 -std=c++17" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux --disable-udev
+        CC="gcc -m64 -std=c14" CXX="g++ -m64 -std=c++14" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-linux --disable-udev
         make -j $MAKEJ
         make install
         cd ../glfw-$GLFW_VERSION
-        CC="gcc -m64 -std=c17" CXX="g++ -m64 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
+        CC="gcc -m64 -std=c14" CXX="g++ -m64 -std=c++14" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.. .
         make -j $MAKEJ
         make install
         cd ../$LIBJPEG
@@ -112,7 +112,7 @@ case $PLATFORM in
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
-        CC="gcc -m64 -std=c17" CXX="g++ -m64 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX17=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DCUDA_NVCC_EXECUTABLE=/usr/local/cuda-$CUDA_VERSION/bin/nvcc -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
+        CC="gcc -m64 -std=c14" CXX="g++ -m64 -std=c++14" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX17=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DCUDA_NVCC_EXECUTABLE=/usr/local/cuda-$CUDA_VERSION/bin/nvcc -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
         ;;
@@ -156,7 +156,7 @@ case $PLATFORM in
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/lib/* lib
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
         cd libfreenect2-$LIBFREENECT2_VERSION
-        CC="cl" /I ../include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX17=ON /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=../bin/libusb-1.0.dll /DGLFW3_LIBRARY=../bin/glfw3.dll /DTurboJPEG_LIBRARIES=../bin/turbojpeg.dll /std:c++17 $CMAKE ../lib/freenect2.lib .
+        CC="cl" $CMAKE /std:c++14 /I ../include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX17=ON /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=../bin/libusb-1.0.dll /DGLFW3_LIBRARY=../bin/glfw3.dll /DTurboJPEG_LIBRARIES=../bin/turbojpeg.dll ../lib/freenect2.lib .
         make -j $MAKEJ
         make install
         ;;
