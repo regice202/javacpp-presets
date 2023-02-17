@@ -21,9 +21,7 @@
  */
 package org.bytedeco.libfreenect2.presets;
 
-import org.bytedeco.javacpp.ClassProperties;
 import org.bytedeco.javacpp.Loader;
-import org.bytedeco.javacpp.LoadEnabled;
 import org.bytedeco.javacpp.annotation.Platform;
 import org.bytedeco.javacpp.annotation.Properties;
 import org.bytedeco.javacpp.presets.javacpp;
@@ -43,18 +41,11 @@ import org.bytedeco.javacpp.tools.InfoMapper;
     @Platform(value = "linux-arm64", preload = "libusb-1.0", preloadpath = {"/usr/aarch64-linux-gnu/lib/", "/usr/lib/aarch64-linux-gnu/"}),
     @Platform(value = "macosx-x86_64", preload = "usb-1.0@.0", preloadpath = "/usr/local/lib/"),
     @Platform(value = "windows-x86_64", preload = {"libusb-1.0", "glfw3", "turbojpeg", "freenect2-openni2"}) })
-public class freenect2 implements LoadEnabled, InfoMapper {
+public class freenect2 implements InfoMapper {
     static { Loader.checkVersion("org.bytedeco", "libfreenect2"); }
-
-    public String platform;
-
-    @Override
-    public void init(ClassProperties props){
-        platform = props.getProperty("platform");
-    }
     
     public void map(InfoMap infoMap) {
-        switch (platform){
+        switch (Loader.getPlatform()){
             case "windows-x86_64": case "linux-x86_64": break;
             default:
                 infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT", "LIBFREENECT2_WITH_OPENCL_SUPPORT").define(false));
