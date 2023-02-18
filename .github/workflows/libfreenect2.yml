@@ -10,7 +10,7 @@ on:
       - .github/workflows/libfreenect2.yml
   workflow_dispatch:
 env:
-  CI_DEPLOY_NEED_CUDA: ${{ startsWith(github.job, 'windows') || github.job == 'linux-x86_64'}}
+  CI_DEPLOY_NEED_CUDA: ${{ (startsWith(github.job, 'windows') || github.job == 'linux-x86_64') == true && 1 || 0}}
   CI_DEPLOY_MODULE: ${{ github.workflow }}
   CI_DEPLOY_PLATFORM: ${{ github.job }}
   CI_DEPLOY_SETTINGS: ${{ secrets.CI_DEPLOY_SETTINGS }}
