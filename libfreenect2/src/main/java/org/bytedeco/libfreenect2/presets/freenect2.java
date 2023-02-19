@@ -50,7 +50,7 @@ public class freenect2 implements InfoMapper {
         
         switch (Loader.getPlatform()){
             case "windows-x86_64": case "linux-x86_64":
-                Logger.info("x-={[X]}=-x | Including CUDA in mapping...")
+                Logger.info("x-={[X]}=-x | Including CUDA in mapping...");
                 infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT").define(true));
                 break;
             default:
