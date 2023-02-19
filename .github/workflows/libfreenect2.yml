@@ -10,7 +10,6 @@ on:
       - .github/workflows/libfreenect2.yml
   workflow_dispatch:
 env:
-  CI_DEPLOY_NEED_CUDA: ${{ (startsWith(github.job, 'windows') || github.job == 'linux-x86_64') == true && 1 || 0}}
   CI_DEPLOY_MODULE: ${{ github.workflow }}
   CI_DEPLOY_PLATFORM: ${{ github.job }}
   CI_DEPLOY_SETTINGS: ${{ secrets.CI_DEPLOY_SETTINGS }}
@@ -35,6 +34,9 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
+      - name: Enable CUDA for deployment
+        run: |
+          echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for 'linux-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         continue-on-error: true
@@ -63,6 +65,9 @@ jobs:
   windows-x86_64:
     runs-on: windows-2019
     steps:
+      - name: Enable CUDA for deployment
+        run: |
+          echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for 'windows-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
         continue-on-error: true
@@ -84,4 +89,4 @@ jobs:
       - name: Start SSH session
         uses: mxschmitt/action-tmate@v3
         continue-on-error: true
-        timeout-minutes: 10
+        timeout-minutes: 5

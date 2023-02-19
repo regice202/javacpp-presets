@@ -151,12 +151,12 @@ case $PLATFORM in
         #make -j $MAKEJ
         #make install
         #cd ..
-        echo "CMake - \"$CMAKE\""
+        #echo "INSTALL_PATH - \"$INSTALL_PATH\""
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/lib/* lib
         cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
         cd libfreenect2-$LIBFREENECT2_VERSION
-        CC="cl freenect2.lib" CXX="cl freenect2.lib" $CMAKE /I ../include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=../bin/libusb-1.0.dll /DGLFW3_LIBRARY=../bin/glfw3.dll /DTurboJPEG_LIBRARIES=../bin/turbojpeg.dll /link /LIBPATH:../lib .
+        CC="cl freenect2.lib" CXX="cl freenect2.lib" $CMAKE /I:$INSTALL_PATH/include /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=$INSTALL_PATH/bin/libusb-1.0.dll /DGLFW3_LIBRARY=$INSTALL_PATH/bin/glfw3.dll /DTurboJPEG_LIBRARIES=$INSTALL_PATH/bin/turbojpeg.dll /link /LIBPATH:$INSTALL_PATH/lib .
         make install
         ;;
     *)

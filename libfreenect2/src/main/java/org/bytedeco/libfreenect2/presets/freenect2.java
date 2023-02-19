@@ -45,12 +45,20 @@ public class freenect2 implements InfoMapper {
     static { Loader.checkVersion("org.bytedeco", "libfreenect2"); }
     
     public void map(InfoMap infoMap) {
+        Logger.info("x-={[X]}=-x | Mapping libfreenect2 (OpenCL disabled) for '" + Loader.getPlatform() + "'...");
+        infoMap.put(new Info("LIBFREENECT2_WITH_OPENCL_SUPPORT").define(false));
+        
         switch (Loader.getPlatform()){
-            case "windows-x86_64": case "linux-x86_64": break;
+            case "windows-x86_64": case "linux-x86_64":
+                Logger.info("x-={[X]}=-x | Including CUDA in mapping...")
+                infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT").define(true));
+                break;
             default:
-                infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT", "LIBFREENECT2_WITH_OPENCL_SUPPORT").define(false));
+                Logger.info("x-={[X]}=-x | Ignoring CUDA...");
+                infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT").define(false));
                 break;
         }
+
         infoMap.put(new Info("libfreenect2::Frame::Type").valueTypes("@Cast(\"libfreenect2::Frame::Type\") int"))
                .put(new Info("std::map<libfreenect2::Frame::Type,libfreenect2::Frame*>").pointerTypes("FrameMap").define())
                .put(new Info("LIBFREENECT2_API").skip());
