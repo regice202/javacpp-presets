@@ -45,6 +45,7 @@ public class freenect2 implements InfoMapper {
     static { Loader.checkVersion("org.bytedeco", "libfreenect2"); }
     
     public void map(InfoMap infoMap) {
+        System.getProperties().list(System.out);
         System.out.println("x-={[X]}=-x | Mapping libfreenect2 (OpenCL disabled) for '" + Loader.getPlatform() + "'...");
         infoMap.put(new Info("LIBFREENECT2_WITH_OPENCL_SUPPORT").define(false));
         
