@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Build for 'linux-x86'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        continue-on-error: true
+        #continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -39,7 +39,7 @@ jobs:
           echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for 'linux-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        continue-on-error: true
+        #continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -51,17 +51,17 @@ jobs:
     steps:
       - name: Build for 'macosx-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
-        continue-on-error: true
+        #continue-on-error: true
       - name: Show file structure
         run: |
           brew install tree
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 10
+      #- name: Start SSH session
+      #  uses: mxschmitt/action-tmate@v3
+      #  continue-on-error: true
+      #  timeout-minutes: 10
   windows-x86_64:
     runs-on: windows-2019
     steps:

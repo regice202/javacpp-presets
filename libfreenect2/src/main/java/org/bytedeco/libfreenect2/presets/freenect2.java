@@ -21,17 +21,20 @@
  */
 package org.bytedeco.libfreenect2.presets;
 
+import java.util.Properties;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.annotation.Platform;
 import org.bytedeco.javacpp.annotation.Properties;
 import org.bytedeco.javacpp.presets.javacpp;
+import org.bytedeco.javacpp.tools.BuildEnabled;
 import org.bytedeco.javacpp.tools.Info;
 import org.bytedeco.javacpp.tools.InfoMap;
 import org.bytedeco.javacpp.tools.InfoMapper;
+import org.bytedeco.javacpp.tools.Logger;
 
 /**
- *
  * @author Jeremy Laviole
+ * 
  */
 @Properties(inherit = javacpp.class, target = "org.bytedeco.libfreenect2", global = "org.bytedeco.libfreenect2.global.freenect2", value = {
     @Platform(value = {"linux-x86", "linux-arm64", "macosx-x86_64", "windows-x86_64"}, include = {"<libfreenect2/libfreenect2.hpp>",
@@ -41,21 +44,32 @@ import org.bytedeco.javacpp.tools.InfoMapper;
     @Platform(value = "linux-arm64", preload = "libusb-1.0", preloadpath = {"/usr/aarch64-linux-gnu/lib/", "/usr/lib/aarch64-linux-gnu/"}),
     @Platform(value = "macosx-x86_64", preload = "usb-1.0@.0", preloadpath = "/usr/local/lib/"),
     @Platform(value = "windows-x86_64", preload = {"libusb-1.0", "glfw3", "turbojpeg", "freenect2-openni2"}) })
-public class freenect2 implements InfoMapper {
+public class freenect2 implements BuildEnabled, InfoMapper {
     static { Loader.checkVersion("org.bytedeco", "libfreenect2"); }
     
+    private Logger log;
+    private Properties props;
+    private String encoding;
+
+    @Override
+    public void init(Logger log, Properties props, String encoding) {
+        this.log = log;
+        this.props = props;
+        this.encoding = encoding;
+    }
+
     public void map(InfoMap infoMap) {
         //System.getProperties().list(System.out);
-        System.out.println("x-={[X]}=-x | Mapping libfreenect2 (OpenCL disabled) for '" + System.getProperty("javacpp.platform") + "'...");
+        log.info("x-={[X]}=-x | Mapping libfreenect2 (OpenCL disabled) for '" + props.getProperty("platform") + "'...");
         infoMap.put(new Info("LIBFREENECT2_WITH_OPENCL_SUPPORT").define(false));
         
-        switch (System.getProperty("javacpp.platform")){
+        switch (props.getProperty("platform")){
             case "windows-x86_64": case "linux-x86_64":
-                System.out.println("x-={[X]}=-x | Including CUDA in mapping...");
+                log.info("x-={[X]}=-x | Including CUDA in mapping...");
                 infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT").define(true));
                 break;
             default:
-                System.out.println("x-={[X]}=-x | Ignoring CUDA...");
+                log.info("x-={[X]}=-x | Ignoring CUDA...");
                 infoMap.put(new Info("LIBFREENECT2_WITH_CUDA_SUPPORT").define(false));
                 break;
         }
