@@ -192,14 +192,14 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * Chilitags  https://github.com/chili-epfl/chilitags
  * flandmark 1.07  https://github.com/uricamic/flandmark
  * Arrow 6.0.x  https://arrow.apache.org/install/
- * HDF5 1.12.x  https://www.hdfgroup.org/downloads/
+ * HDF5 1.14.x  https://www.hdfgroup.org/downloads/
  * Hyperscan 5.4.x  https://github.com/intel/hyperscan
  * LZ4 1.9.x  https://github.com/lz4/lz4
  * MKL 2022.x  https://software.intel.com/mkl
  * MKL-DNN 0.21.x  https://github.com/oneapi-src/oneDNN
  * DNNL 2.7.x  https://github.com/oneapi-src/oneDNN
  * OpenBLAS 0.3.21  http://www.openblas.net/
- * ARPACK-NG 3.8.0  https://github.com/opencollab/arpack-ng
+ * ARPACK-NG 3.9.0  https://github.com/opencollab/arpack-ng
  * CMINPACK 1.3.8  https://github.com/devernay/cminpack
  * FFTW 3.3.10  http://www.fftw.org/download.html
  * GSL 2.7  http://www.gnu.org/software/gsl/#downloading
@@ -230,9 +230,9 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * DepthAI 2.19.x  https://github.com/luxonis/depthai-core
  * ONNX 1.12.x  https://github.com/onnx/onnx
  * nGraph 0.26.0  https://github.com/NervanaSystems/ngraph
- * ONNX Runtime 1.13.x  https://github.com/microsoft/onnxruntime
+ * ONNX Runtime 1.14.x  https://github.com/microsoft/onnxruntime
  * TVM 0.10.x  https://github.com/apache/tvm
- * Bullet Physics SDK 3.24  https://pybullet.org
+ * Bullet Physics SDK 3.25  https://pybullet.org
  * LiquidFun  http://google.github.io/liquidfun/
  * Qt 5.15.x  https://download.qt.io/archive/qt/
  * Mono/Skia 2.88.x  https://github.com/mono/skia
