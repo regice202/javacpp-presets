@@ -48,11 +48,11 @@ public class freenect2 implements BuildEnabled, InfoMapper {
     static { Loader.checkVersion("org.bytedeco", "libfreenect2"); }
     
     private Logger log;
-    private Properties props;
+    private java.util.Properties props;
     private String encoding;
 
     @Override
-    public void init(Logger log, Properties props, String encoding) {
+    public void init(Logger log, java.util.Properties props, String encoding) {
         this.log = log;
         this.props = props;
         this.encoding = encoding;
