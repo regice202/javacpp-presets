@@ -21,7 +21,6 @@
  */
 package org.bytedeco.libfreenect2.presets;
 
-import java.util.Properties;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.annotation.Platform;
 import org.bytedeco.javacpp.annotation.Properties;
