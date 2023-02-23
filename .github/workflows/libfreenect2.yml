@@ -71,6 +71,9 @@ jobs:
       - name: Build for 'windows-x86_64'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
         continue-on-error: true
+      - name: Show CMake output
+        run: |
+          type ./CMakeFiles/CMakeOutput.log
       - name: Show file structure
         run: |
           tree /f /a
