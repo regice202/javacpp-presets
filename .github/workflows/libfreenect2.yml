@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
-      - name: Build for 'linux-x86'
+      - name: Build for '${{ github.job }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -37,7 +37,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
-      - name: Build for 'linux-x86_64'
+      - name: Build for '${{ github.job }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -49,7 +49,7 @@ jobs:
   macosx-x86_64:
     runs-on: macos-11
     steps:
-      - name: Build for 'macosx-x86_64'
+      - name: Build for '${{ github.job }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
         #continue-on-error: true
       - name: Show file structure
@@ -68,12 +68,15 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
-      - name: Build for 'windows-x86_64'
+      - name: Build for '${{ github.job }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
         continue-on-error: true
       - name: Show CMake output
+        #D:\a\javacpp-presets\javacpp-presets\CMakeFiles\CMakeOutput.log
+        #D:/a/javacpp-presets/javacpp-presets/libfreenect2/cppbuild/windows-x86_64/libfreenect2-0.2.0/CMakeFiles/CMakeOutput.log
+        #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libfreenect2-$LIBFREENECT2_VERSION/CMakeFiles/CMakeOutput.log
         run: |
-          type ./CMakeFiles/CMakeOutput.log
+          type "$INSTALL_PATH/CMakeFiles/CMakeOutput.log"
       - name: Show file structure
         run: |
           tree /f /a
