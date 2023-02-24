@@ -65,11 +65,13 @@ jobs:
   windows-x86_64:
     runs-on: windows-2019
     steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v3
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
-      - name: Build for '$GITHUB_JOB'
-        uses: bytedeco/javacpp-presets/.github/actions/deploy-windows@actions
+      - name: Build for '${{ $GITHUB_JOB }}'
+        uses: ./.github/actions/deploy-windows@actions
         continue-on-error: true
       - name: Show CMake output
         #D:\a\javacpp-presets\javacpp-presets\CMakeFiles\CMakeOutput.log
