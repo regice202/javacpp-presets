@@ -71,7 +71,7 @@ jobs:
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
       - name: Build for '${{ github.job }}'
-        uses: ./.github/actions/deploy-windows@actions
+        uses: ./.github/actions/deploy-windows
         continue-on-error: true
       - name: Show CMake output
         #D:\a\javacpp-presets\javacpp-presets\CMakeFiles\CMakeOutput.log
