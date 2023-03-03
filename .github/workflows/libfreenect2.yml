@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
-      - name: Build for ${{ github.job }}
+      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -33,7 +33,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.job }}
+          name: ${{ env.CI_DEPLOY_PLATFORM }}
           path: ./libfreenect2/target
   linux-x86_64:
     runs-on: ubuntu-20.04
@@ -42,7 +42,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
-      - name: Build for ${{ github.job }}
+      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -54,12 +54,12 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.job }}
+          name: ${{ env.CI_DEPLOY_PLATFORM }}
           path: ./libfreenect2/target
   macosx-x86_64:
     runs-on: macos-11
     steps:
-      - name: Build for ${{ github.job }}
+      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
         #continue-on-error: true
       - name: Show file structure
@@ -71,7 +71,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.job }}
+          name: ${{ env.CI_DEPLOY_PLATFORM }}
           path: ./libfreenect2/target
       #- name: Start SSH session
       #  uses: mxschmitt/action-tmate@v3
@@ -85,7 +85,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
-      - name: Build for ${{ github.job }}
+      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: ./.github/actions/deploy-windows
         continue-on-error: true
       - name: Show CMake output
