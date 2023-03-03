@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: centos:7
     steps:
-      - name: Build for '$GITHUB_JOB'
+      - name: Build for ${{ github.job }}
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -30,6 +30,11 @@ jobs:
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.job }}
+          path: ./libfreenect2/target
   linux-x86_64:
     runs-on: ubuntu-20.04
     container: centos:7
@@ -37,7 +42,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
-      - name: Build for '$GITHUB_JOB'
+      - name: Build for ${{ github.job }}
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
         #continue-on-error: true
       - name: Show file structure
@@ -46,10 +51,15 @@ jobs:
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.job }}
+          path: ./libfreenect2/target
   macosx-x86_64:
     runs-on: macos-11
     steps:
-      - name: Build for '$GITHUB_JOB'
+      - name: Build for ${{ github.job }}
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
         #continue-on-error: true
       - name: Show file structure
@@ -58,6 +68,11 @@ jobs:
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.job }}
+          path: ./libfreenect2/target
       #- name: Start SSH session
       #  uses: mxschmitt/action-tmate@v3
       #  continue-on-error: true
@@ -70,7 +85,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: |
           echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
-      - name: Build for '${{ github.job }}'
+      - name: Build for ${{ github.job }}
         uses: ./.github/actions/deploy-windows
         continue-on-error: true
       - name: Show CMake output
