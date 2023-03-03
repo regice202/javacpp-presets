@@ -20,9 +20,6 @@ download https://github.com/glfw/glfw/archive/$GLFW_VERSION.tar.gz glfw-$GLFW_VE
 download http://downloads.sourceforge.net/project/libjpeg-turbo/1.5.3/$LIBJPEG.tar.gz $LIBJPEG.tar.gz
 download https://github.com/OpenKinect/libfreenect2/archive/v$LIBFREENECT2_VERSION.tar.gz libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
-    if [[ $PLATFORM == windows* ]]; then
-        download https://github.com/OpenKinect/libfreenect2/releases/download/v$LIBFREENECT2_VERSION/libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
-    fi
     download https://github.com/NVIDIA/cuda-samples/archive/refs/tags/10.1.2.tar.gz cuda-samples-10.1.2.tar.gz
 fi
 #download https://github.com/NVIDIA/cuda-samples/archive/v$CUDA_VERSION.tar.gz cuda-samples-$CUDA_VERSION.tar.gz
@@ -39,9 +36,6 @@ tar --totals -xzf ../$LIBJPEG.tar.gz
 tar --totals -xzf ../libfreenect2-$LIBFREENECT2_VERSION.tar.gz
 #tar --totals -xzf ../cuda-samples-$CUDA_VERSION.tar.gz
 if [[ $PLATFORM == windows* ]] || [[ $PLATFORM == linux-x86_64 ]]; then
-    if [[ $PLATFORM == windows* ]]; then
-        unzip -o ../libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64.zip
-    fi
     tar --totals -xzf ../cuda-samples-10.1.2.tar.gz
 fi
 
@@ -141,24 +135,25 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        #echo "x-={[X]}=-x"
-        #tree.com //a //f
-        #echo "x-={[X]}=-x"
-        cd cuda-samples-10.1.2
+        export CC="gcc -m64 -fPIC"
+        cd libusb-$LIBUSB_VERSION
+        CC="gcc -m64" CXX="g++ -m64" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-w64-mingw32 --disable-udev
+        make -j $MAKEJ
+        make install
+        cd ../glfw-$GLFW_VERSION
+        CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH .
+        make -j $MAKEJ
+        make install
+        cd ../$LIBJPEG
+        ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-w64-mingw32
+        make -j $MAKEJ
+        make install
+        cd ../cuda-samples-10.1.2
         powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '..\include' -Force"
-        cd ..
-        #cd cuda-samples-$CUDA_VERSION
-        #make -j $MAKEJ
-        #make install
-        #cd ..
-        #echo "INSTALL_PATH - \"$INSTALL_PATH\""
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/include/* include
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/lib/* lib
-        cp -a libfreenect2-$LIBFREENECT2_VERSION-usbdk-vs2015-x64/bin/* bin
-        cd libfreenect2-$LIBFREENECT2_VERSION
-        echo "x-={[X]}=-x INSTALL_PATH='$INSTALL_PATH' | CUDA_TOOLKIT_ROOT_DIR='%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION'"
-        CC="cl.exe" CXX="cl.exe" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=OFF -DCUDA_TOOLKIT_ROOT_DIR="%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" -DLibUSB_INCLUDE_DIRS="$INSTALL_PATH/libusb-$LIBUSB_VERSION" -DLibUSB_LIBRARIES="$INSTALL_PATH/bin/libusb-1.0.dll" -DGLFW3_INCLUDE_DIRS="$INSTALL_PATH/glfw-$GLFW_VERSION" -DGLFW3_LIBRARY="$INSTALL_PATH/bin/glfw3.dll" -DTurboJPEG_INCLUDE_DIRS="$INSTALL_PATH/$LIBJPEG" -DTurboJPEG_LIBRARIES="$INSTALL_PATH/bin/turbojpeg.dll" .
-        #CC="cl" CXX="cl" $CMAKE /DCMAKE_BUILD_TYPE=Release /DBUILD_EXAMPLES=OFF /DBUILD_OPENNI_DRIVER=OFF /DENABLE_CUDA=ON /DENABLE_CXX11=OFF /DCUDA_TOOLKIT_ROOT_DIR=%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION /DENABLE_OPENCL=OFF /DENABLE_VAAPI=OFF /DENABLE_TEGRAJPEG=OFF /DCMAKE_INSTALL_PREFIX=.. /DLibUSB_LIBRARIES=$INSTALL_PATH/bin/libusb-1.0.dll /DGLFW3_LIBRARY=$INSTALL_PATH/bin/glfw3.dll /DTurboJPEG_LIBRARIES=$INSTALL_PATH/bin/turbojpeg.dll /link /LIBPATH:$INSTALL_PATH/lib .
+        cd ../libfreenect2-$LIBFREENECT2_VERSION
+        patch -Np1 < ../../../libfreenect2.patch
+        CC="gcc -m64 -std=c17" CXX="gcc -m64 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=OFF -DCUDA_TOOLKIT_ROOT_DIR="%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" -DLibUSB_INCLUDE_DIRS="$INSTALL_PATH/include/libusb-1.0" -DLibUSB_LIBRARIES="$INSTALL_PATH/bin/libusb-1.0.dll" -DGLFW3_INCLUDE_DIRS="$INSTALL_PATH/include" -DGLFW3_LIBRARY="$INSTALL_PATH/bin/glfw3.dll" -DTurboJPEG_INCLUDE_DIRS="$INSTALL_PATH/include" -DTurboJPEG_LIBRARIES="$INSTALL_PATH/bin/turbojpeg.dll" .
+        make -j $MAKEJ
         make install
         ;;
     *)
