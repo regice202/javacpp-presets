@@ -135,26 +135,25 @@ case $PLATFORM in
         install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib ../lib/libfreenect2.dylib
         ;;
     windows-x86_64)
-        export CC="cl.exe"
         cd libusb-$LIBUSB_VERSION
-        CC="cl.exe" CXX="cl.exe" ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-w64-mingw32 --disable-udev
-        make -j $MAKEJ
-        make install
+        ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-w64-mingw32 --disable-udev
+        nmake
+        nmake install
         cd ../glfw-$GLFW_VERSION
-        CC="cl.exe" CXX="cl.exe" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH .
-        make -j $MAKEJ
-        make install
+        "$CMAKE" -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH .
+        nmake
+        nmake install
         cd ../$LIBJPEG
         ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --host=x86_64-w64-mingw32
-        make -j $MAKEJ
-        make install
+        nmake
+        nmake install
         cd ../cuda-samples-10.1.2
         powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '..\include' -Force"
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
-        CC="cl.exe" CXX="cl.exe" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=OFF -DCUDA_TOOLKIT_ROOT_DIR="%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" -DLibUSB_INCLUDE_DIRS="$INSTALL_PATH/include/libusb-1.0" -DLibUSB_LIBRARIES="$INSTALL_PATH/bin/libusb-1.0.dll" -DGLFW3_INCLUDE_DIRS="$INSTALL_PATH/include" -DGLFW3_LIBRARY="$INSTALL_PATH/bin/glfw3.dll" -DTurboJPEG_INCLUDE_DIRS="$INSTALL_PATH/include" -DTurboJPEG_LIBRARIES="$INSTALL_PATH/bin/turbojpeg.dll" .
-        make -j $MAKEJ
-        make install
+        "$CMAKE" -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=OFF -DCUDA_TOOLKIT_ROOT_DIR="%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" -DLibUSB_INCLUDE_DIRS="$INSTALL_PATH/include/libusb-1.0" -DLibUSB_LIBRARIES="$INSTALL_PATH/bin/libusb-1.0.dll" -DGLFW3_INCLUDE_DIRS="$INSTALL_PATH/include" -DGLFW3_LIBRARY="$INSTALL_PATH/bin/glfw3.dll" -DTurboJPEG_INCLUDE_DIRS="$INSTALL_PATH/include" -DTurboJPEG_LIBRARIES="$INSTALL_PATH/bin/turbojpeg.dll" .
+        nmake
+        nmake install
         ;;
     *)
         echo "Error: Platform \"$PLATFORM\" is not supported"
