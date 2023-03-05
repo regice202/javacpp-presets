@@ -94,6 +94,7 @@ jobs:
         #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libfreenect2-$LIBFREENECT2_VERSION/CMakeFiles/CMakeOutput.log
         run: |
           type ./${{ github.workflow }}/cppbuild/${{ github.job }}/${{ github.workflow }}-0.2.0/CMakeFiles/CMakeOutput.log
+        continue-on-error: true
       - name: Show file structure
         run: |
           tree /f /a
