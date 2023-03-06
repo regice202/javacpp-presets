@@ -92,8 +92,11 @@ jobs:
         #D:\a\javacpp-presets\javacpp-presets\CMakeFiles\CMakeOutput.log
         #D:/a/javacpp-presets/javacpp-presets/libfreenect2/cppbuild/windows-x86_64/libfreenect2-0.2.0/CMakeFiles/CMakeOutput.log
         #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libfreenect2-$LIBFREENECT2_VERSION/CMakeFiles/CMakeOutput.log
+        #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/${{ github.workflow }}-0.2.0/CMakeFiles/CMakeOutput.log
         run: |
-          type ./${{ github.workflow }}/cppbuild/${{ github.job }}/${{ github.workflow }}-0.2.0/CMakeFiles/CMakeOutput.log
+          type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb-1.0.22/Makefile
+          echo "x-={[X]}=-x Makefiles for ./libusb-1.0.22 /\  &  ./libusb \/"
+          type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb/Makefile
         continue-on-error: true
       - name: Show file structure
         run: |

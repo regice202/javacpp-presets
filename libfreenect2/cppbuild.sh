@@ -137,24 +137,23 @@ case $PLATFORM in
     windows-x86_64)
         export CC="cl.exe"
         cd libusb-$LIBUSB_VERSION
-        CC="cl.exe" CXX="cl.exe" ./configure --prefix="$INSTALL_PATH" --disable-shared --with-pic --host=x86_64-w64-mingw32 --disable-udev
-        ninja -j $MAKEJ
-        ninja install
+        CC="cl.exe" CXX="cl.exe" ./configure --prefix="$INSTALL_PATH" --disable-shared --with-pic --disable-udev
+        make -j $MAKEJ
+        make install
         cd ../glfw-$GLFW_VERSION
         CC="cl.exe" CXX="cl.exe" $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" .
-        ninja -j $MAKEJ
-        ninja install
+        make -j $MAKEJ
+        make install
         cd ../$LIBJPEG
-        ./configure --prefix="$INSTALL_PATH" --disable-shared --with-pic --host=x86_64-w64-mingw32
-        ninja -j $MAKEJ
-        ninja install
+        ./configure --prefix="$INSTALL_PATH" --disable-shared --with-pic
+        make -j $MAKEJ
+        make install
         cd ../cuda-samples-10.1.2
         powershell -command "Get-ChildItem -Recurse -Force -Depth 2 -Include *.h | Move-Item -Destination '..\include' -Force"
         cd ../libfreenect2-$LIBFREENECT2_VERSION
-        patch -Np1 < ../../../libfreenect2.patch
         CC="cl.exe" CXX="cl.exe" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX11=OFF -DCUDA_TOOLKIT_ROOT_DIR="%ProgramFiles%/NVIDIA GPU Computing Toolkit/CUDA/v$CUDA_VERSION" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX="$INSTALL_PATH" -DLibUSB_INCLUDE_DIRS="$INSTALL_PATH/include/libusb-1.0" -DLibUSB_LIBRARIES="$INSTALL_PATH/bin/libusb-1.0.dll" -DGLFW3_INCLUDE_DIRS="$INSTALL_PATH/include" -DGLFW3_LIBRARY="$INSTALL_PATH/bin/glfw3.dll" -DTurboJPEG_INCLUDE_DIRS="$INSTALL_PATH/include" -DTurboJPEG_LIBRARIES="$INSTALL_PATH/bin/turbojpeg.dll" .
-        ninja -j $MAKEJ
-        ninja install
+        make -j $MAKEJ
+        make install
         ;;
     *)
         echo "Error: Platform \"$PLATFORM\" is not supported"
