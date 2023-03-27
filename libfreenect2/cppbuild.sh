@@ -75,7 +75,7 @@ case $PLATFORM in
         #make -j $MAKEJ
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
-        patch -Np1 < ../../../libfreenect2.patch
+        #patch -Np1 < ../../../libfreenect2.patch
         CC="gcc -m32" CXX="g++ -m32" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=OFF -DENABLE_CXX11=OFF -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
@@ -105,7 +105,7 @@ case $PLATFORM in
         #make -j $MAKEJ
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
-        patch -Np1 < ../../../libfreenect2.patch
+        #patch -Np1 < ../../../libfreenect2.patch
         CC="gcc -m64 -std=c17" CXX="g++ -m64 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX17=OFF -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DCUDA_NVCC_EXECUTABLE=/usr/local/cuda-$CUDA_VERSION/bin/nvcc -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
@@ -128,7 +128,7 @@ case $PLATFORM in
         #make -j $MAKEJ
         #make install
         cd ../libfreenect2-$LIBFREENECT2_VERSION
-        patch -Np1 < ../../../libfreenect2.patch
+        #patch -Np1 < ../../../libfreenect2.patch
         LDFLAGS="-framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=OFF -DENABLE_CXX17=ON -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=/usr/local/include/libusb-1.0 -DLibUSB_LIBRARIES=/usr/local/lib/libusb-1.0.dylib -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_MACOSX_RPATH=ON .
         make -j $MAKEJ
         make install

@@ -26,10 +26,15 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          cat cmake_modules/FindLibUSB.cmake.rej
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
+      - name: Start SSH session
+        uses: mxschmitt/action-tmate@v3
+        continue-on-error: true
+        timeout-minutes: 10
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -47,10 +52,15 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          cat cmake_modules/FindLibUSB.cmake.rej
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
           tree -a /usr/local
+      - name: Start SSH session
+        uses: mxschmitt/action-tmate@v3
+        continue-on-error: true
+        timeout-minutes: 10
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -64,6 +74,7 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          cat cmake_modules/FindLibUSB.cmake.rej
           brew install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -73,10 +84,10 @@ jobs:
         with:
           name: ${{ env.CI_DEPLOY_PLATFORM }}
           path: ./libfreenect2/target
-      #- name: Start SSH session
-      #  uses: mxschmitt/action-tmate@v3
-      #  continue-on-error: true
-      #  timeout-minutes: 10
+      - name: Start SSH session
+        uses: mxschmitt/action-tmate@v3
+        continue-on-error: true
+        timeout-minutes: 10
   windows-x86_64:
     runs-on: windows-2019
     steps:
@@ -94,6 +105,7 @@ jobs:
         #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libfreenect2-$LIBFREENECT2_VERSION/CMakeFiles/CMakeOutput.log
         #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/${{ github.workflow }}-0.2.0/CMakeFiles/CMakeOutput.log
         run: |
+          type ./cmake_modules/FindLibUSB.cmake.rej
           type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb-1.0.22/Makefile
           echo "x-={[X]}=-x Makefiles for ./libusb-1.0.22 /\  &  ./libusb \/"
           type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb/Makefile
