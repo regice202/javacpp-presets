@@ -11,7 +11,7 @@ NASM_VERSION=2.14
 LIBUSB_VERSION=1.0.22
 GLFW_VERSION=3.2.1
 LIBJPEG=libjpeg-turbo-1.5.3
-LIBFREENECT2_VERSION=0.2.0
+LIBFREENECT2_VERSION=0.2.1
 CUDA_VERSION=11.8
 
 download https://download.videolan.org/contrib/nasm/nasm-$NASM_VERSION.tar.gz nasm-$NASM_VERSION.tar.gz

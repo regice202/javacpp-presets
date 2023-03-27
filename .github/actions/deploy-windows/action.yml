@@ -28,7 +28,7 @@ runs:
         choco uninstall maven
         choco install maven --version 3.6.3 --force
 
-        python -m pip install gdown || python -m pip install gdown
+        REM python -m pip install gdown || python -m pip install gdown
 
         if not "%CI_DEPLOY_NEED_BAZEL%"=="" (
           echo Installing Bazel
