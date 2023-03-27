@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
-          cat cmake_modules/FindLibUSB.cmake.rej
+          cat ./cmake_modules/FindLibUSB.cmake.rej
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -52,7 +52,7 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
-          cat cmake_modules/FindLibUSB.cmake.rej
+          cat ./cmake_modules/FindLibUSB.cmake.rej
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -74,7 +74,7 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
-          cat cmake_modules/FindLibUSB.cmake.rej
+          cat ./cmake_modules/FindLibUSB.cmake.rej
           brew install tree
           tree -a
           echo "x-={[X]}=-x"
