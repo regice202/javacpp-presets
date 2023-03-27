@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        #continue-on-error: true
+        continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -44,7 +44,7 @@ jobs:
           echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        #continue-on-error: true
+        continue-on-error: true
       - name: Show file structure
         run: |
           yum -y install tree
@@ -61,7 +61,7 @@ jobs:
     steps:
       - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
-        #continue-on-error: true
+        continue-on-error: true
       - name: Show file structure
         run: |
           brew install tree
