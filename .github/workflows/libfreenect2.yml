@@ -26,7 +26,9 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          echo ${PKG_CONFIG_FOUND} - ${DEPENDS_DIR} - ${PKG_CONFIG_PATH} - ${CMAKE_SYSTEM_NAME} - ${LibUSB_FIND_REQUIRED} - ${LibUSB_INCLUDE_DIRS}
           cat `find / -name '*.cmake.rej' -print`
+          echo "x-={[X]}=-x"
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -52,7 +54,9 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          echo ${PKG_CONFIG_FOUND} - ${DEPENDS_DIR} - ${ENV{PKG_CONFIG_PATH}} - ${CMAKE_SYSTEM_NAME} - ${LibUSB_FIND_REQUIRED} - ${LibUSB_INCLUDE_DIRS}
           cat `find / -name '*.cmake.rej' -print`
+          echo "x-={[X]}=-x"
           yum -y install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -74,7 +78,9 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          echo ${PKG_CONFIG_FOUND} - ${DEPENDS_DIR} - ${ENV{PKG_CONFIG_PATH}} - ${CMAKE_SYSTEM_NAME} - ${LibUSB_FIND_REQUIRED} - ${LibUSB_INCLUDE_DIRS}
           cat `find / -name '*.cmake.rej' -print`
+          echo "x-={[X]}=-x"
           brew install tree
           tree -a
           echo "x-={[X]}=-x"
@@ -112,6 +118,8 @@ jobs:
         continue-on-error: true
       - name: Show file structure
         run: |
+          echo ${PKG_CONFIG_FOUND} - ${DEPENDS_DIR} - ${env:PKG_CONFIG_PATH} - ${CMAKE_SYSTEM_NAME} - ${LibUSB_FIND_REQUIRED} - ${LibUSB_INCLUDE_DIRS}
+          echo "x-={[X]}=-x"
           tree /f /a
           echo "x-={[X]}=-x"
           tree /f /a "$CUDA_PATH/../.."
