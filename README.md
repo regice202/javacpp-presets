@@ -179,7 +179,7 @@ The JavaCPP Presets depend on Maven, a powerful build system for Java, so before
 Each child module in turn relies by default on the included [`cppbuild.sh` scripts](#the-cppbuildsh-scripts), explained below, to install its corresponding native libraries in the `cppbuild` subdirectory. To use native libraries already installed somewhere else on the system, other installation directories than `cppbuild` can also be specified either in the `pom.xml` files or in the `.java` configuration files. The following versions are supported:
 
  * OpenCV 4.7.x  https://opencv.org/releases/
- * FFmpeg 5.1.x  http://ffmpeg.org/download.html
+ * FFmpeg 6.0.x  http://ffmpeg.org/download.html
  * FlyCapture 2.13.x  https://www.flir.com/products/flycapture-sdk
  * Spinnaker 3.0.x https://www.flir.com/products/spinnaker-sdk
  * libdc1394 2.2.6  http://sourceforge.net/projects/libdc1394/files/
@@ -207,7 +207,7 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * NumPy 1.24.x  https://github.com/numpy/numpy
  * SciPy 1.10.x  https://github.com/scipy/scipy
  * Gym 0.26.x  https://github.com/openai/gym
- * LLVM 15.0.x  http://llvm.org/releases/download.html
+ * LLVM 16.0.x  http://llvm.org/releases/download.html
  * libffi 3.4.x  https://github.com/libffi/libffi
  * libpostal 1.1  https://github.com/openvenues/libpostal
  * LibRaw 0.20.2  https://www.libraw.org/download
@@ -223,7 +223,7 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * MXNet 1.9.x  https://github.com/apache/incubator-mxnet
  * PyTorch 1.13.x  https://github.com/pytorch/pytorch
  * TensorFlow 1.15.x  https://github.com/tensorflow/tensorflow
- * TensorFlow Lite 2.11.x  https://github.com/tensorflow/tensorflow
+ * TensorFlow Lite 2.12.x  https://github.com/tensorflow/tensorflow
  * TensorRT 8.x  https://developer.nvidia.com/tensorrt
  * Triton Inference Server 2.24.x  https://developer.nvidia.com/nvidia-triton-inference-server
  * The Arcade Learning Environment 0.8.x  https://github.com/mgbellemare/Arcade-Learning-Environment
@@ -231,7 +231,7 @@ Each child module in turn relies by default on the included [`cppbuild.sh` scrip
  * ONNX 1.12.x  https://github.com/onnx/onnx
  * nGraph 0.26.0  https://github.com/NervanaSystems/ngraph
  * ONNX Runtime 1.14.x  https://github.com/microsoft/onnxruntime
- * TVM 0.10.x  https://github.com/apache/tvm
+ * TVM 0.11.x  https://github.com/apache/tvm
  * Bullet Physics SDK 3.25  https://pybullet.org
  * LiquidFun  http://google.github.io/liquidfun/
  * Qt 5.15.x  https://download.qt.io/archive/qt/
