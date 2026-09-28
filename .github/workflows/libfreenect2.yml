@@ -20,7 +20,7 @@ jobs:
       - name: Enable CUDA for deployment
         run: echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
-        uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
+        uses: regice202/javacpp-presets/.github/actions/deploy-centos@actions
       - name: Show file structure on failure
         if: failure()
         run: |
