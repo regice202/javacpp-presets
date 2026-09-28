@@ -99,14 +99,24 @@ case $PLATFORM in
         make -j $MAKEJ
         make install
         cd ../cuda-samples-10.1.2
-        find . -maxdepth 2 | grep "\.h$" | tr '\n' '\0' | xargs -0 -I {} cp "{}" ../include
-        #find -D exec . -maxdepth 2 -type f -name '*.h' -exec "mv '{}' ../include"
-        #cd ../cuda-samples-$CUDA_VERSION
-        #make -j $MAKEJ
-        #make install
+        mkdir -p $INSTALL_PATH/nvsamples/common/inc
+        cp "$(find . -name helper_math.h | head -n 1)" $INSTALL_PATH/nvsamples/common/inc/
+        ls -l $INSTALL_PATH/nvsamples/common/inc/helper_math.h
+        export NVCUDASAMPLES_ROOT=$INSTALL_PATH/nvsamples
+        CUDA_HOME=/usr/local/cuda
+        if [[ ! -d $CUDA_HOME ]]; then
+            CUDA_HOME=$(ls -d /usr/local/cuda-* 2>/dev/null | sort -V | tail -n 1)
+        fi
+        echo "x-={[X]}=-x Using CUDA at: $CUDA_HOME"
+        if [[ -z "$CUDA_HOME" || ! -x "$CUDA_HOME/bin/nvcc" ]]; then
+            echo "ERROR: nvcc not found (CUDA_HOME='$CUDA_HOME')"
+            ls -la /usr/local
+            exit 1
+        fi
+        $CUDA_HOME/bin/nvcc --version
         cd ../libfreenect2-$LIBFREENECT2_VERSION
         patch -Np1 < ../../../libfreenect2.patch
-        CC="gcc -m64 -std=c17" CXX="g++ -m64 -std=c++17" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DENABLE_CXX17=OFF -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-$CUDA_VERSION -DCUDA_NVCC_EXECUTABLE=/usr/local/cuda-$CUDA_VERSION/bin/nvcc -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
+        CC="gcc -m64" CXX="g++ -m64" $CMAKE -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_OPENNI_DRIVER=OFF -DENABLE_CUDA=ON -DCUDA_TOOLKIT_ROOT_DIR=$CUDA_HOME -DCUDA_NVCC_FLAGS="-arch=sm_75" -DENABLE_OPENCL=OFF -DENABLE_VAAPI=OFF -DENABLE_TEGRAJPEG=OFF -DCMAKE_INSTALL_PREFIX=.. -DLibUSB_INCLUDE_DIRS=../include/libusb-1.0 -DLibUSB_LIBRARIES=../lib/libusb-1.0.a -DGLFW3_INCLUDE_DIRS=../include -DGLFW3_LIBRARY=../lib/libglfw3.a -DTurboJPEG_INCLUDE_DIRS=../include -DTurboJPEG_LIBRARIES=../lib/libturbojpeg.a -DCMAKE_SHARED_LINKER_FLAGS="-lX11 -lXrandr -lXinerama -lXxf86vm -lXcursor" .
         make -j $MAKEJ
         make install
         ;;
