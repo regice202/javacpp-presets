@@ -4,10 +4,6 @@ on:
     paths:
       - libfreenect2/**
       - .github/workflows/libfreenect2.yml
-  pull_request:
-    paths:
-      - libfreenect2/**
-      - .github/workflows/libfreenect2.yml
   workflow_dispatch:
 env:
   CI_DEPLOY_MODULE: ${{ github.workflow }}
@@ -17,126 +13,20 @@ env:
   CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
   STAGING_REPOSITORY: ${{ secrets.STAGING_REPOSITORY }}
 jobs:
-  linux-x86:
-    runs-on: ubuntu-20.04
-    container: centos:7
-    steps:
-      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
-        uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        continue-on-error: true
-      - name: Show file structure
-        run: |
-          ( set -o posix ; set )
-          echo "x-={[X]}=-x"
-          cat `find / -name '*.cmake.rej' -print`
-          echo "x-={[X]}=-x"
-          yum -y install tree
-          tree -a
-          echo "x-={[X]}=-x"
-          tree -a /usr/local
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 10
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.CI_DEPLOY_PLATFORM }}
-          path: ./libfreenect2/target
   linux-x86_64:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container: centos:7
     steps:
       - name: Enable CUDA for deployment
-        run: |
-          echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
+        run: echo "CI_DEPLOY_NEED_CUDA=1" >> $GITHUB_ENV
       - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
         uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
-        continue-on-error: true
-      - name: Show file structure
+      - name: Show file structure on failure
+        if: failure()
         run: |
-          ( set -o posix ; set )
-          echo "x-={[X]}=-x"
-          cat `find / -name '*.cmake.rej' -print`
-          echo "x-={[X]}=-x"
-          yum -y install tree
-          tree -a
-          echo "x-={[X]}=-x"
-          tree -a /usr/local
-      - name: Start SSH session
+          cat `find / -name '*.cmake.rej' -print` || true
+          ls /usr/local | grep -i cuda || true
+      - name: Start SSH session on failure
+        if: failure()
         uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 10
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.CI_DEPLOY_PLATFORM }}
-          path: ./libfreenect2/target
-  macosx-x86_64:
-    runs-on: macos-11
-    steps:
-      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
-        uses: bytedeco/javacpp-presets/.github/actions/deploy-macosx@actions
-        continue-on-error: true
-      - name: Show file structure
-        run: |
-          ( set -o posix ; set )
-          echo "x-={[X]}=-x"
-          cat `find / -name '*.cmake.rej' -print`
-          echo "x-={[X]}=-x"
-          brew install tree
-          tree -a
-          echo "x-={[X]}=-x"
-          tree -a /usr/local
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.CI_DEPLOY_PLATFORM }}
-          path: ./libfreenect2/target
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 10
-  windows-x86_64:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout local repository
-        uses: actions/checkout@v3
-      - name: Enable CUDA for deployment
-        run: |
-          echo "CI_DEPLOY_NEED_CUDA=1" >> $env:GITHUB_ENV
-      - name: Build for '${{ env.CI_DEPLOY_PLATFORM }}'
-        uses: ./.github/actions/deploy-windows
-        continue-on-error: true
-      - name: Show CMake output
-        #D:\a\javacpp-presets\javacpp-presets\CMakeFiles\CMakeOutput.log
-        #D:/a/javacpp-presets/javacpp-presets/libfreenect2/cppbuild/windows-x86_64/libfreenect2-0.2.0/CMakeFiles/CMakeOutput.log
-        #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libfreenect2-$LIBFREENECT2_VERSION/CMakeFiles/CMakeOutput.log
-        #type ./${{ github.workflow }}/cppbuild/${{ github.job }}/${{ github.workflow }}-0.2.0/CMakeFiles/CMakeOutput.log
-        run: |
-          for /f %f in ('dir /B /S D:*.cmake.rej') do type %f
-          type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb-1.0.22/Makefile
-          echo "x-={[X]}=-x Makefiles for ./libusb-1.0.22 /\  &  ./libusb \/"
-          type ./${{ github.workflow }}/cppbuild/${{ github.job }}/libusb/Makefile
-        continue-on-error: true
-      - name: Show file structure
-        run: |
-          set
-          echo "x-={[X]}=-x"
-          tree /f /a
-          echo "x-={[X]}=-x"
-          tree /f /a "$CUDA_PATH/../.."
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 10
-  redeploy:
-    needs: [linux-x86, linux-x86_64, macosx-x86_64, windows-x86_64]
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Redeploy
-        uses: bytedeco/javacpp-presets/.github/actions/redeploy@actions
-      - name: Start SSH session
-        uses: mxschmitt/action-tmate@v3
-        continue-on-error: true
-        timeout-minutes: 5
+        timeout-minutes: 15
